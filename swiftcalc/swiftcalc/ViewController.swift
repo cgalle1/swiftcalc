@@ -12,6 +12,7 @@ class ViewController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        calculatorStack.editable = false
         // Do any additional setup after loading the view.
     }
 
@@ -28,22 +29,31 @@ class ViewController: NSViewController {
     }
     @IBOutlet weak var enterButton: NSButton!
     @IBAction func enterPressed(sender: AnyObject) {
-        
-//        calculatorStack.textStorage?.appendAttributedString(inputField.attributedStringValue + "\n")
-        calculatorStack.textContainer?.textView?.string?.appendContentsOf(inputField.stringValue + "\n")
-     //   calculatorStack.textStorage?.appendAttributedString(NSAttributedString("\n"))
+        if(inputField.stringValue != "")
+        {
+            if ((Double(inputField.stringValue)) < 0){
+                inputField.stringValue = ("NaN\n")
+            }
+            else
+            {
+                calculatorStack.textContainer?.textView?.string?.appendContentsOf(inputField.stringValue + "\n")
+                inputField.stringValue = ""
+                
+            }
+        }
     }
     @IBOutlet var calculatorStack: NSTextView!
     @IBAction func keyPressed(sender: AnyObject) {
         if(inputField.stringValue != "")
         {
             if ((Double(inputField.stringValue)) < 0){
-                inputField.stringValue.appendContentsOf("NaN\n")
+                inputField.stringValue = ("NaN\n")
             }
             else
             {
                 calculatorStack.textContainer?.textView?.string?.appendContentsOf(inputField.stringValue + "\n")
                 inputField.stringValue = ""
+            
             }
         }
     }
